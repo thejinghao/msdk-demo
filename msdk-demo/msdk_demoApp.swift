@@ -26,7 +26,30 @@ struct msdk_demoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onOpenURL { url in
+                    handleIncomingURL(url)
+                }
         }
         .modelContainer(sharedModelContainer)
+    }
+    
+    // Configure URL scheme handler for Klarna redirects
+    init() {
+        // Note: With the URL scheme configured in Info.plist via Xcode,
+        // the app will automatically handle msdk-demo:// URLs
+        print("App initialized with URL scheme support")
+    }
+    
+    private func handleIncomingURL(_ url: URL) {
+        print("Received URL: \(url.absoluteString)")
+        
+        // Handle Klarna redirect URLs
+        // Format: msdk-demo://order-confirmation
+        if url.scheme == "msdk-demo" {
+            if url.host == "order-confirmation" {
+                print("Klarna flow completed, returning to order confirmation")
+                // The navigation is handled in CheckoutView
+            }
+        }
     }
 }

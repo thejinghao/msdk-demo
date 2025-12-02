@@ -6,56 +6,100 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationView {
+            VStack(spacing: 20) {
+                // Header
+                VStack(spacing: 8) {
+                    Text("MSDK Demo")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    
+                    Text("Select an integration type")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                .padding(.top, 40)
+                .padding(.bottom, 20)
+                
+                // Options List
+                VStack(spacing: 16) {
+                    // Native View - Enabled
+                    NavigationLink(destination: ProductDetailView()) {
+                        OptionCard(
+                            title: "Native view",
+                            description: "Native iOS integration with Klarna SDK",
+                            isEnabled: true
+                        )
                     }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    // Hybrid - Disabled
+                    OptionCard(
+                        title: "Hybrid",
+                        description: "Coming soon",
+                        isEnabled: false
+                    )
+                    
+                    // Klarna WebView - Disabled
+                    OptionCard(
+                        title: "Klarna WebView",
+                        description: "Coming soon",
+                        isEnabled: false
+                    )
                 }
-                .onDelete(perform: deleteItems)
+                .padding(.horizontal, 20)
+                
+                Spacer()
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
+            .navigationBarHidden(true)
         }
     }
+}
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+struct OptionCard: View {
+    let title: String
+    let description: String
+    let isEnabled: Bool
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.headline)
+                    .foregroundColor(isEnabled ? .primary : .gray)
+                
+                Text(description)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            
+            Spacer()
+            
+            if isEnabled {
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.gray)
+            } else {
+                Image(systemName: "lock.fill")
+                    .foregroundColor(.gray)
             }
         }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(isEnabled ? Color(UIColor.systemBackground) : Color(UIColor.systemGray6))
+                .shadow(color: Color.black.opacity(isEnabled ? 0.1 : 0.05), radius: 4, x: 0, y: 2)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+        )
+        .opacity(isEnabled ? 1.0 : 0.6)
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

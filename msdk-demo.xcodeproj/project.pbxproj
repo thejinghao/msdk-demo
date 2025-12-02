@@ -6,13 +6,33 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B05E9D6F2EDF7EDE009AA288 /* KlarnaMobileSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05E9D6E2EDF7EDE009AA288 /* KlarnaMobileSDK */; };
+		B05E9D712EDF7EDE009AA288 /* KlarnaNetworkMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B05E9D702EDF7EDE009AA288 /* KlarnaNetworkMessaging */; };
+		B05E9D732EDF7EDE009AA288 /* KlarnaNetworkPayment in Frameworks */ = {isa = PBXBuildFile; productRef = B05E9D722EDF7EDE009AA288 /* KlarnaNetworkPayment */; };
+		B05E9D752EDF7EDE009AA288 /* KlarnaPayments in Frameworks */ = {isa = PBXBuildFile; productRef = B05E9D742EDF7EDE009AA288 /* KlarnaPayments */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B044E82E2EDF6AB5006BD64A /* msdk-demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "msdk-demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B044E84F2EDF7BC5006BD64A /* Exceptions for "msdk-demo" folder in "msdk-demo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B044E82D2EDF6AB5006BD64A /* msdk-demo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B044E8302EDF6AB5006BD64A /* msdk-demo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B044E84F2EDF7BC5006BD64A /* Exceptions for "msdk-demo" folder in "msdk-demo" target */,
+			);
 			path = "msdk-demo";
 			sourceTree = "<group>";
 		};
@@ -23,6 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B05E9D752EDF7EDE009AA288 /* KlarnaPayments in Frameworks */,
+				B05E9D6F2EDF7EDE009AA288 /* KlarnaMobileSDK in Frameworks */,
+				B05E9D712EDF7EDE009AA288 /* KlarnaNetworkMessaging in Frameworks */,
+				B05E9D732EDF7EDE009AA288 /* KlarnaNetworkPayment in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +89,10 @@
 			);
 			name = "msdk-demo";
 			packageProductDependencies = (
+				B05E9D6E2EDF7EDE009AA288 /* KlarnaMobileSDK */,
+				B05E9D702EDF7EDE009AA288 /* KlarnaNetworkMessaging */,
+				B05E9D722EDF7EDE009AA288 /* KlarnaNetworkPayment */,
+				B05E9D742EDF7EDE009AA288 /* KlarnaPayments */,
 			);
 			productName = "msdk-demo";
 			productReference = B044E82E2EDF6AB5006BD64A /* msdk-demo.app */;
@@ -94,6 +122,9 @@
 			);
 			mainGroup = B044E8252EDF6AB5006BD64A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B044E82F2EDF6AB5006BD64A /* Products */;
 			projectDirPath = "";
@@ -253,11 +284,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "msdk-demo/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -284,11 +315,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "msdk-demo/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -328,6 +359,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/klarna/klarna-mobile-sdk-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B05E9D6E2EDF7EDE009AA288 /* KlarnaMobileSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */;
+			productName = KlarnaMobileSDK;
+		};
+		B05E9D702EDF7EDE009AA288 /* KlarnaNetworkMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */;
+			productName = KlarnaNetworkMessaging;
+		};
+		B05E9D722EDF7EDE009AA288 /* KlarnaNetworkPayment */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */;
+			productName = KlarnaNetworkPayment;
+		};
+		B05E9D742EDF7EDE009AA288 /* KlarnaPayments */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */;
+			productName = KlarnaPayments;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B044E8262EDF6AB5006BD64A /* Project object */;
 }
