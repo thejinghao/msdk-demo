@@ -15,8 +15,24 @@
 			</array>
 		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>klarna</string>
+		<string>klarnaconsent</string>
+		<string>https</string>
+		<string>http</string>
+	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>https://js.klarna.com</key>
+			<string></string>
+			<key>https://x.klarnacdn.net</key>
+			<string></string>
+			<key>*.klarnaservices.com</key>
+			<string></string>
+		</dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSAllowsLocalNetworking</key>

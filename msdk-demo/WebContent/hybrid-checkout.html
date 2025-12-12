@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Checkout</title>
+    <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --sat: env(safe-area-inset-top);
+            --sar: env(safe-area-inset-right);
+            --sab: env(safe-area-inset-bottom);
+            --sal: env(safe-area-inset-left);
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 0;
+            padding: 20px;
+            padding-top: calc(var(--sat) + 60px);
+            padding-bottom: calc(var(--sab) + 20px);
+            min-height: 100vh;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .section {
+            margin-bottom: 24px;
+        }
+        
+        .order-summary {
+            background: #f5f5f7;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .product-name {
+            font-weight: 500;
+        }
+        
+        .product-sku {
+            font-size: 12px;
+            color: #86868b;
+        }
+        
+        .price-breakdown {
+            border-top: 1px solid #d2d2d7;
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #d2d2d7;
+        }
+        
+        .total-amount {
+            color: #007aff;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        label {
+            display: block;
+            font-size: 12px;
+            color: #86868b;
+            margin-bottom: 4px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #007aff;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .shipping-option {
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .shipping-option:hover {
+            border-color: #007aff;
+        }
+        
+        .shipping-option.selected {
+            border-color: #007aff;
+            border-width: 2px;
+            background: #f0f7ff;
+        }
+        
+        .shipping-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        
+        .shipping-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .shipping-price {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .shipping-price.free {
+            color: #34c759;
+        }
+        
+        .shipping-time {
+            font-size: 12px;
+            color: #86868b;
+        }
+        
+        .radio-button {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d2d2d7;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 12px;
+            position: relative;
+        }
+        
+        .shipping-option.selected .radio-button {
+            border-color: #007aff;
+        }
+        
+        .shipping-option.selected .radio-button::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #007aff;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+        
+        .payment-method-option {
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .payment-method-option.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #f5f5f7;
+        }
+        
+        .payment-method-option.selected {
+            border-color: #ff2d55;
+            border-width: 2px;
+            background: #fff5f7;
+        }
+        
+        .payment-method-option:not(.disabled):hover {
+            border-color: #ff2d55;
+        }
+        
+        .payment-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d2d2d7;
+            border-radius: 50%;
+            margin-right: 12px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .payment-method-option.disabled .payment-radio {
+            border-color: #d2d2d7;
+            opacity: 0.5;
+        }
+        
+        .payment-method-option.selected .payment-radio {
+            border-color: #ff2d55;
+        }
+        
+        .payment-method-option.selected .payment-radio::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #ff2d55;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+        
+        .payment-method-label {
+            font-size: 14px;
+            font-weight: 600;
+            flex: 1;
+        }
+        
+        .payment-method-note {
+            font-size: 12px;
+            color: #86868b;
+            font-style: italic;
+            margin-left: 8px;
+        }
+        
+        #klarna-payments-container {
+            margin: 16px 0 24px 0;
+            min-height: 150px;
+            display: none;
+        }
+        
+        #klarna-payments-container.visible {
+            display: block;
+        }
+        
+        #klarna-session-status {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        #klarna-session-status.loading {
+            background: #f0f7ff;
+            color: #007aff;
+        }
+        
+        #klarna-session-status.error {
+            background: #fff0f0;
+            color: #ff3b30;
+        }
+        
+        #klarna-session-status.hidden {
+            display: none;
+        }
+        
+        .place-order-button {
+            width: 100%;
+            padding: 16px;
+            background: #ff2d55;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .place-order-button:hover {
+            opacity: 0.9;
+        }
+        
+        .place-order-button:disabled {
+            background: #d2d2d7;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #86868b;
+            padding: 20px;
+        }
+        
+        .error {
+            color: #ff3b30;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        
+        .status-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        
+        .status-message.info {
+            background: #f0f7ff;
+            color: #007aff;
+        }
+        
+        .status-message.error {
+            background: #fff0f0;
+            color: #ff3b30;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Checkout</h1>
+        
+        <!-- Order Summary -->
+        <div class="section">
+            <h2>Order Summary</h2>
+            <div class="order-summary">
+                <div class="product-info">
+                    <div>
+                        <div class="product-name" id="productName">Classic T-Shirt</div>
+                        <div class="product-sku" id="productSKU">SKU: SKU-123</div>
+                    </div>
+                    <div class="product-price" id="productPrice">$259.00</div>
+                </div>
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">$259.00</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Shipping</span>
+                        <span id="shippingCost">$0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Total</span>
+                        <span class="total-amount" id="totalAmount">$259.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Shipping Information -->
+        <div class="section">
+            <h2>Shipping Information</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="firstName" value="John">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="lastName" value="Doe">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Address Line 1</label>
+                <input type="text" id="addressLine1" value="123 Main Street">
+            </div>
+            <div class="form-group">
+                <label>Address Line 2</label>
+                <input type="text" id="addressLine2" value="Apt 4B">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" id="city" value="San Francisco">
+                </div>
+                <div class="form-group">
+                    <label>State/Region</label>
+                    <input type="text" id="state" value="CA">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>ZIP Code</label>
+                    <input type="text" id="zipCode" value="94102">
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <input type="text" id="country" value="United States">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="phone" value="+13106683312">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="email" value="customer@email.us">
+            </div>
+        </div>
+        
+        <!-- Shipping Options -->
+        <div class="section">
+            <h2>Shipping Method</h2>
+            <div class="shipping-option selected" data-id="standard" data-price="0" data-time="5-7 business days">
+                <div style="display: flex; align-items: center;">
+                    <span class="radio-button"></span>
+                    <div style="flex: 1;">
+                        <div class="shipping-header">
+                            <span class="shipping-name">Standard Shipping</span>
+                            <span class="shipping-price free">FREE</span>
+                        </div>
+                        <div class="shipping-time">5-7 business days</div>
+                    </div>
+                </div>
+            </div>
+            <div class="shipping-option" data-id="express" data-price="15" data-time="2-3 business days">
+                <div style="display: flex; align-items: center;">
+                    <span class="radio-button"></span>
+                    <div style="flex: 1;">
+                        <div class="shipping-header">
+                            <span class="shipping-name">Express Shipping</span>
+                            <span class="shipping-price">$15.00</span>
+                        </div>
+                        <div class="shipping-time">2-3 business days</div>
+                    </div>
+                </div>
+            </div>
+            <div class="shipping-option" data-id="overnight" data-price="35" data-time="next business day">
+                <div style="display: flex; align-items: center;">
+                    <span class="radio-button"></span>
+                    <div style="flex: 1;">
+                        <div class="shipping-header">
+                            <span class="shipping-name">Overnight Shipping</span>
+                            <span class="shipping-price">$35.00</span>
+                        </div>
+                        <div class="shipping-time">next business day</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payment Method -->
+        <div class="section">
+            <h2>Payment Method</h2>
+            
+            <!-- Credit Card Option (Disabled) -->
+            <div class="payment-method-option disabled" data-method="credit-card">
+                <span class="payment-radio"></span>
+                <span class="payment-method-label">Credit Card</span>
+                <span class="payment-method-note">(For illustration only)</span>
+            </div>
+            
+            <!-- Klarna Option (Active) -->
+            <div class="payment-method-option selected" data-method="klarna">
+                <span class="payment-radio"></span>
+                <span class="payment-method-label">Klarna</span>
+            </div>
+            
+            <!-- Klarna Session Status -->
+            <div id="klarna-session-status" class="loading">
+                <span>⏳</span>
+                <span>Initializing Klarna payment...</span>
+            </div>
+            
+            <!-- Klarna Payment Widget Container -->
+            <div id="klarna-payments-container"></div>
+        </div>
+        
+        <!-- Place Order Button -->
+        <button class="place-order-button" id="placeOrderButton" disabled>
+            Place Order
+        </button>
+    </div>
+    
+    <script>
+        // Product and order state
+        const productPrice = 259.00;
+        let selectedShippingPrice = 0;
+        let clientToken = null;
+        let klarnaLoaded = false;
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupShippingOptions();
+            setupPaymentMethodOptions();
+            
+            // Check if native bridge is available before requesting session
+            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.klarnaApp) {
+                console.log('Native bridge available, requesting session');
+                requestSession();
+            } else {
+                console.error('Native bridge not available');
+                updateKlarnaStatus('error', 'Unable to connect to native app');
+            }
+        });
+        
+        // Setup payment method option selection
+        function setupPaymentMethodOptions() {
+            const options = document.querySelectorAll('.payment-method-option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Prevent selection of disabled options
+                    if (this.classList.contains('disabled')) {
+                        return;
+                    }
+                    
+                    // Remove selected from all options
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected to clicked option
+                    this.classList.add('selected');
+                    
+                    // Show/hide Klarna widget based on selection
+                    const method = this.dataset.method;
+                    const klarnaContainer = document.getElementById('klarna-payments-container');
+                    if (method === 'klarna') {
+                        klarnaContainer.classList.add('visible');
+                    } else {
+                        klarnaContainer.classList.remove('visible');
+                    }
+                });
+            });
+        }
+        
+        // Update Klarna session status
+        function updateKlarnaStatus(type, message) {
+            const statusDiv = document.getElementById('klarna-session-status');
+            statusDiv.className = type; // 'loading', 'error', or 'hidden'
+            
+            const emoji = type === 'loading' ? '⏳' : type === 'error' ? '❌' : '✅';
+            statusDiv.innerHTML = `<span>${emoji}</span><span>${message}</span>`;
+        }
+        
+        // Hide Klarna status
+        function hideKlarnaStatus() {
+            const statusDiv = document.getElementById('klarna-session-status');
+            statusDiv.className = 'hidden';
+        }
+        
+        // Setup shipping option selection
+        function setupShippingOptions() {
+            const options = document.querySelectorAll('.shipping-option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    selectedShippingPrice = parseFloat(this.dataset.price);
+                    updateTotals();
+                    
+                    // Update session with new amount if Klarna is loaded
+                    if (klarnaLoaded && clientToken) {
+                        updateKlarnaSession();
+                    }
+                });
+            });
+        }
+        
+        // Update price totals
+        function updateTotals() {
+            const shipping = selectedShippingPrice;
+            const total = productPrice + shipping;
+            
+            document.getElementById('shippingCost').textContent = shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+        }
+        
+        // Request session from native app
+        function requestSession() {
+            updateKlarnaStatus('loading', 'Initializing Klarna payment...');
+            
+            const orderData = getOrderData();
+            
+            // Send message to native app via JavaScript bridge
+            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.klarnaApp) {
+                window.webkit.messageHandlers.klarnaApp.postMessage({
+                    action: 'createSession',
+                    data: orderData
+                });
+            } else {
+                updateKlarnaStatus('error', 'Unable to connect to native app');
+            }
+        }
+        
+        // Called by native app after session is created
+        function setClientToken(token) {
+            console.log('Received client token from native app:', token.substring(0, 20) + '...');
+            clientToken = token;
+            initializeKlarna();
+        }
+        
+        // Initialize Klarna Payments
+        function initializeKlarna() {
+            console.log('Initializing Klarna Payments...');
+            
+            if (!clientToken) {
+                console.error('No client token provided');
+                updateKlarnaStatus('error', 'No client token provided');
+                return;
+            }
+            
+            if (typeof Klarna === 'undefined' || !Klarna.Payments) {
+                console.error('Klarna SDK not loaded');
+                updateKlarnaStatus('loading', 'Loading Klarna SDK...');
+                setTimeout(initializeKlarna, 500); // Retry after 500ms
+                return;
+            }
+            
+            try {
+                console.log('Calling Klarna.Payments.init with token:', clientToken.substring(0, 20) + '...');
+                updateKlarnaStatus('loading', 'Loading payment options...');
+                
+                Klarna.Payments.init({
+                    client_token: clientToken
+                });
+                
+                console.log('Klarna.Payments.init successful');
+                loadKlarnaPayment();
+            } catch (error) {
+                console.error('Error initializing Klarna:', error);
+                updateKlarnaStatus('error', 'Error initializing Klarna: ' + error.message);
+            }
+        }
+        
+        // Load Klarna payment method
+        function loadKlarnaPayment() {
+            console.log('Loading Klarna payment method...');
+            const orderData = getOrderData();
+            console.log('Order data:', orderData);
+            
+            Klarna.Payments.load({
+                container: '#klarna-payments-container',
+                payment_method_category: 'pay_later'
+            }, orderData, function(res) {
+                console.log('Klarna load response:', res);
+                if (res.show_form) {
+                    klarnaLoaded = true;
+                    document.getElementById('placeOrderButton').disabled = false;
+                    
+                    // Show the Klarna container and hide status
+                    document.getElementById('klarna-payments-container').classList.add('visible');
+                    hideKlarnaStatus();
+                    
+                    console.log('Klarna payment widget loaded successfully');
+                } else {
+                    console.error('Klarna did not show form. Response:', res);
+                    const errorMsg = res.error && res.error.invalid_fields 
+                        ? 'Invalid fields: ' + res.error.invalid_fields 
+                        : 'Unable to load payment method';
+                    updateKlarnaStatus('error', errorMsg);
+                }
+            });
+        }
+        
+        // Update Klarna session when cart changes
+        function updateKlarnaSession() {
+            const orderData = getOrderData();
+            
+            Klarna.Payments.load({
+                container: '#klarna-payments-container',
+                payment_method_category: 'pay_later'
+            }, orderData, function(res) {
+                console.log('Klarna session updated');
+            });
+        }
+        
+        // Get order data for Klarna
+        function getOrderData() {
+            const shipping = selectedShippingPrice;
+            const total = productPrice + shipping;
+            const totalInMinorUnits = Math.round(total * 100);
+            const productInMinorUnits = Math.round(productPrice * 100);
+            const shippingInMinorUnits = Math.round(shipping * 100);
+            
+            const shippingOption = document.querySelector('.shipping-option.selected');
+            const shippingId = shippingOption ? shippingOption.dataset.id : 'standard';
+            const shippingName = shippingOption ? shippingOption.querySelector('.shipping-name').textContent : 'Standard Shipping';
+            
+            return {
+                purchase_country: 'US',
+                purchase_currency: 'USD',
+                locale: 'en-US',
+                order_amount: totalInMinorUnits,
+                order_tax_amount: 0,
+                order_lines: [
+                    {
+                        type: 'physical',
+                        reference: 'SKU-123',
+                        name: 'Classic T-Shirt',
+                        quantity: 1,
+                        quantity_unit: 'pcs',
+                        unit_price: productInMinorUnits,
+                        tax_rate: 0,
+                        total_amount: productInMinorUnits,
+                        total_tax_amount: 0
+                    },
+                    {
+                        type: 'shipping_fee',
+                        reference: shippingId,
+                        name: shippingName,
+                        quantity: 1,
+                        quantity_unit: 'pcs',
+                        unit_price: shippingInMinorUnits,
+                        tax_rate: 0,
+                        total_amount: shippingInMinorUnits,
+                        total_tax_amount: 0
+                    }
+                ]
+            };
+        }
+        
+        // Place order button handler
+        document.getElementById('placeOrderButton').addEventListener('click', function() {
+            // Check if Klarna is selected
+            const selectedMethod = document.querySelector('.payment-method-option.selected');
+            if (!selectedMethod || selectedMethod.dataset.method !== 'klarna') {
+                updateKlarnaStatus('error', 'Please select Klarna as payment method');
+                return;
+            }
+            
+            if (!klarnaLoaded) {
+                updateKlarnaStatus('error', 'Klarna payment not ready');
+                return;
+            }
+            
+            this.disabled = true;
+            this.textContent = 'Processing...';
+            updateKlarnaStatus('loading', 'Authorizing payment...');
+            
+            const orderData = getOrderData();
+            
+            Klarna.Payments.authorize({
+                payment_method_category: 'pay_later'
+            }, orderData, function(res) {
+                if (res.approved && res.authorization_token) {
+                    updateKlarnaStatus('loading', 'Creating order...');
+                    
+                    // Send authorization token to native app
+                    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.klarnaApp) {
+                        window.webkit.messageHandlers.klarnaApp.postMessage({
+                            action: 'createOrder',
+                            authorizationToken: res.authorization_token,
+                            orderData: orderData,
+                            shippingInfo: getShippingInfo()
+                        });
+                    }
+                } else {
+                    updateKlarnaStatus('error', 'Payment authorization failed');
+                    document.getElementById('placeOrderButton').disabled = false;
+                    document.getElementById('placeOrderButton').textContent = 'Place Order';
+                }
+            });
+        });
+        
+        // Get shipping information
+        function getShippingInfo() {
+            return {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                addressLine1: document.getElementById('addressLine1').value,
+                addressLine2: document.getElementById('addressLine2').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zipCode: document.getElementById('zipCode').value,
+                country: document.getElementById('country').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value
+            };
+        }
+        
+        // Handle errors from native app
+        function handleError(errorMessage) {
+            updateKlarnaStatus('error', 'Error: ' + errorMessage);
+            document.getElementById('placeOrderButton').disabled = false;
+            document.getElementById('placeOrderButton').textContent = 'Place Order';
+        }
+    </script>
+</body>
+</html>

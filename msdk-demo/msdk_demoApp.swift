@@ -48,7 +48,7 @@ struct msdk_demoApp: App {
         if url.scheme == "msdk-demo" {
             if url.host == "order-confirmation" {
                 print("Klarna flow completed, returning to order confirmation")
-                // The navigation is handled in CheckoutView
+                // The navigation is handled in NativeCheckoutView or HybridCheckoutView
             }
         }
     }

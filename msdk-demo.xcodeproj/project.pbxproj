@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B05E9D6F2EDF7EDE009AA288 /* KlarnaMobileSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05E9D6E2EDF7EDE009AA288 /* KlarnaMobileSDK */; };
-		B05E9D712EDF7EDE009AA288 /* KlarnaNetworkMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B05E9D702EDF7EDE009AA288 /* KlarnaNetworkMessaging */; };
-		B05E9D732EDF7EDE009AA288 /* KlarnaNetworkPayment in Frameworks */ = {isa = PBXBuildFile; productRef = B05E9D722EDF7EDE009AA288 /* KlarnaNetworkPayment */; };
-		B05E9D752EDF7EDE009AA288 /* KlarnaPayments in Frameworks */ = {isa = PBXBuildFile; productRef = B05E9D742EDF7EDE009AA288 /* KlarnaPayments */; };
+		B0451BA22EE8C46F0044B31C /* KlarnaMobileSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B0451BA12EE8C46F0044B31C /* KlarnaMobileSDK */; };
+		B0451BA42EE8C46F0044B31C /* KlarnaNetworkMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = B0451BA32EE8C46F0044B31C /* KlarnaNetworkMessaging */; };
+		B0451BA62EE8C46F0044B31C /* KlarnaNetworkPayment in Frameworks */ = {isa = PBXBuildFile; productRef = B0451BA52EE8C46F0044B31C /* KlarnaNetworkPayment */; };
+		B0451BA82EE8C46F0044B31C /* KlarnaPayments in Frameworks */ = {isa = PBXBuildFile; productRef = B0451BA72EE8C46F0044B31C /* KlarnaPayments */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,10 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B05E9D752EDF7EDE009AA288 /* KlarnaPayments in Frameworks */,
-				B05E9D6F2EDF7EDE009AA288 /* KlarnaMobileSDK in Frameworks */,
-				B05E9D712EDF7EDE009AA288 /* KlarnaNetworkMessaging in Frameworks */,
-				B05E9D732EDF7EDE009AA288 /* KlarnaNetworkPayment in Frameworks */,
+				B0451BA82EE8C46F0044B31C /* KlarnaPayments in Frameworks */,
+				B0451BA22EE8C46F0044B31C /* KlarnaMobileSDK in Frameworks */,
+				B0451BA42EE8C46F0044B31C /* KlarnaNetworkMessaging in Frameworks */,
+				B0451BA62EE8C46F0044B31C /* KlarnaNetworkPayment in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,10 +89,10 @@
 			);
 			name = "msdk-demo";
 			packageProductDependencies = (
-				B05E9D6E2EDF7EDE009AA288 /* KlarnaMobileSDK */,
-				B05E9D702EDF7EDE009AA288 /* KlarnaNetworkMessaging */,
-				B05E9D722EDF7EDE009AA288 /* KlarnaNetworkPayment */,
-				B05E9D742EDF7EDE009AA288 /* KlarnaPayments */,
+				B0451BA12EE8C46F0044B31C /* KlarnaMobileSDK */,
+				B0451BA32EE8C46F0044B31C /* KlarnaNetworkMessaging */,
+				B0451BA52EE8C46F0044B31C /* KlarnaNetworkPayment */,
+				B0451BA72EE8C46F0044B31C /* KlarnaPayments */,
 			);
 			productName = "msdk-demo";
 			productReference = B044E82E2EDF6AB5006BD64A /* msdk-demo.app */;
@@ -123,7 +123,7 @@
 			mainGroup = B044E8252EDF6AB5006BD64A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */,
+				B0451BA02EE8C46F0044B31C /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B044E82F2EDF6AB5006BD64A /* Products */;
@@ -361,35 +361,35 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */ = {
+		B0451BA02EE8C46F0044B31C /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/klarna/klarna-mobile-sdk-spm";
+			repositoryURL = "https://github.com/klarna/klarna-mobile-sdk-ios";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.10.1;
+				kind = exactVersion;
+				version = 2.10.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B05E9D6E2EDF7EDE009AA288 /* KlarnaMobileSDK */ = {
+		B0451BA12EE8C46F0044B31C /* KlarnaMobileSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */;
+			package = B0451BA02EE8C46F0044B31C /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-ios" */;
 			productName = KlarnaMobileSDK;
 		};
-		B05E9D702EDF7EDE009AA288 /* KlarnaNetworkMessaging */ = {
+		B0451BA32EE8C46F0044B31C /* KlarnaNetworkMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */;
+			package = B0451BA02EE8C46F0044B31C /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-ios" */;
 			productName = KlarnaNetworkMessaging;
 		};
-		B05E9D722EDF7EDE009AA288 /* KlarnaNetworkPayment */ = {
+		B0451BA52EE8C46F0044B31C /* KlarnaNetworkPayment */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */;
+			package = B0451BA02EE8C46F0044B31C /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-ios" */;
 			productName = KlarnaNetworkPayment;
 		};
-		B05E9D742EDF7EDE009AA288 /* KlarnaPayments */ = {
+		B0451BA72EE8C46F0044B31C /* KlarnaPayments */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B05E9D6D2EDF7EDE009AA288 /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-spm" */;
+			package = B0451BA02EE8C46F0044B31C /* XCRemoteSwiftPackageReference "klarna-mobile-sdk-ios" */;
 			productName = KlarnaPayments;
 		};
 /* End XCSwiftPackageProductDependency section */

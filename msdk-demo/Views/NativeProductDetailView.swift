@@ -1,5 +1,5 @@
 //
-//  ProductDetailView.swift
+//  NativeProductDetailView.swift
 //  msdk-demo
 //
 //  Created by Jing Hao on 12/2/25.
@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct ProductDetailView: View {
+struct NativeProductDetailView: View {
     @State private var showingCheckout = false
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var osmHeight: CGFloat = 0
     
     // Mock product data
     private let productName = "Classic T-Shirt"
@@ -50,6 +51,15 @@ struct ProductDetailView: View {
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.blue)
+                    
+                    // Klarna On-Site Messaging
+                    KlarnaOSMViewWrapper(
+                        purchaseAmount: productPrice,
+                        height: $osmHeight
+                    )
+                    .frame(height: osmHeight > 0 ? osmHeight : 100)
+                    .opacity(osmHeight > 0 ? 1 : 0)
+                    .padding(.vertical, 4)
                     
                     // SKU
                     Text("SKU: \(productSKU)")
@@ -91,7 +101,6 @@ struct ProductDetailView: View {
         .navigationTitle("Product Details")
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
-            // Buy with Klarna Button
             VStack(spacing: 12) {
                 if let error = errorMessage {
                     Text(error)
@@ -101,7 +110,7 @@ struct ProductDetailView: View {
                         .padding(.horizontal)
                 }
                 
-                NavigationLink(destination: CheckoutView(
+                NavigationLink(destination: NativeCheckoutView(
                     productName: productName,
                     productPrice: productPrice,
                     productSKU: productSKU
@@ -150,6 +159,6 @@ struct FeatureRow: View {
 
 #Preview {
     NavigationView {
-        ProductDetailView()
+        NativeProductDetailView()
     }
 }

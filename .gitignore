@@ -2,6 +2,9 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+# markdown files
+*.md
+
 ## User settings
 xcuserdata/
 
@@ -100,4 +103,7 @@ backend/.vercel
 .DS_Store
 .AppleDouble
 .LSOverride
+
+
+
 

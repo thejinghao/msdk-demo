@@ -27,7 +27,7 @@ struct ContentView: View {
                 // Options List
                 VStack(spacing: 16) {
                     // Native View - Enabled
-                    NavigationLink(destination: ProductDetailView()) {
+                    NavigationLink(destination: NativeProductDetailView()) {
                         OptionCard(
                             title: "Native view",
                             description: "Native iOS integration with Klarna SDK",
@@ -36,12 +36,15 @@ struct ContentView: View {
                     }
                     .buttonStyle(PlainButtonStyle())
                     
-                    // Hybrid - Disabled
-                    OptionCard(
-                        title: "Hybrid",
-                        description: "Coming soon",
-                        isEnabled: false
-                    )
+                    // Hybrid - Enabled
+                    NavigationLink(destination: HybridProductDetailView()) {
+                        OptionCard(
+                            title: "Hybrid",
+                            description: "Web checkout in native WebView",
+                            isEnabled: true
+                        )
+                    }
+                    .buttonStyle(PlainButtonStyle())
                     
                     // Klarna WebView - Disabled
                     OptionCard(

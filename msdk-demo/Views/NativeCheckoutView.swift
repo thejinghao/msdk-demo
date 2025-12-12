@@ -1,5 +1,5 @@
 //
-//  CheckoutView.swift
+//  NativeCheckoutView.swift
 //  msdk-demo
 //
 //  Mock checkout page with shipping options and Klarna payment integration
@@ -48,9 +48,9 @@ enum PaymentMethod: String, CaseIterable {
     case klarna = "Klarna"
 }
 
-// MARK: - Checkout View
+// MARK: - Native Checkout View
 
-struct CheckoutView: View {
+struct NativeCheckoutView: View {
     @Environment(\.dismiss) var dismiss
     
     // Product information
@@ -387,16 +387,6 @@ struct CheckoutView: View {
                     .font(.caption)
                     .foregroundColor(.red)
                     .padding(.top, 4)
-            } else if clientToken != nil {
-                HStack(spacing: 4) {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.green)
-                        .font(.caption)
-                    Text("Klarna ready")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                .padding(.top, 4)
             }
         }
     }
@@ -881,10 +871,14 @@ struct KlarnaPaymentViewEmbedded: UIViewRepresentable {
 
 #Preview {
     NavigationView {
-        CheckoutView(
+        NativeCheckoutView(
             productName: "Classic T-Shirt",
             productPrice: 259.00,
             productSKU: "SKU-123"
         )
     }
 }
+
+
+
+
